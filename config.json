@@ -93,7 +93,9 @@
   },
   "password": "",
   "pawn": {
-    "legacy_plugins": [],
+    "legacy_plugins": [
+      "sscanf"
+    ],
     "main_scripts": ["sysafarilarp 1"],
     "side_scripts": []
   },

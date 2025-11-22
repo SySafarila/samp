@@ -2,6 +2,7 @@
 #include <core>
 #include <float>
 #include <zcmd>
+#include <sscanf2>
 
 #pragma tabsize 0
 
@@ -27,19 +28,25 @@ CMD:me(playerid, params[])
     return 1;
 }
 
-CMD:addmoney(playerid, params[])
+CMD:setmoney(playerid, params[])
 {
-    new amount = strval(params);
+    new integer:amount, integer:targetPlayerId;
+    sscanf(params, "ii", targetPlayerId, amount);
 
-    if(!amount)
-        return SendClientMessage(playerid, -1, "Usage: /addmoney <amount>");
+    if (!amount) {
+        return SendClientMessage(playerid, -1, "Usage: /setmoney <playerid> <amount>");
+    }
 
-    GivePlayerMoney(playerid, amount);
-    new currentMoney = GetPlayerMoney(playerid);
+    if (!IsPlayerConnected(targetPlayerId)) {
+        return SendClientMessage(playerid, -1, "Target player is not online.");
+    }
+
+    GivePlayerMoney(targetPlayerId, amount);
+    new currentMoney = GetPlayerMoney(targetPlayerId);
 
     new msg[64];
     format(msg, sizeof msg, "You have received $%d. New balance: $%d", amount, currentMoney);
-    SendClientMessage(playerid, -1, msg);
+    SendClientMessage(targetPlayerId, -1, msg);
 
     return 1;
 }
