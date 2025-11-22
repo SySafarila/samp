@@ -1,9 +1,11 @@
-#include <a_samp>
+#include <open.mp>
 #include <core>
 #include <float>
 #include <zcmd>
 
 #pragma tabsize 0
+
+new GAME_MODE_TEXT[] = "SySafarila Script";
 
 main()
 {
@@ -22,6 +24,23 @@ CMD:me(playerid, params[])
 
     format(msg, sizeof(msg), "* %s %s", name, params);
     SendClientMessageToAll(0xC2A2DAFF, msg);
+    return 1;
+}
+
+CMD:addmoney(playerid, params[])
+{
+    new amount = strval(params);
+
+    if(!amount)
+        return SendClientMessage(playerid, -1, "Usage: /addmoney <amount>");
+
+    GivePlayerMoney(playerid, amount);
+    new currentMoney = GetPlayerMoney(playerid);
+
+    new msg[64];
+    format(msg, sizeof msg, "You have received $%d. New balance: $%d", amount, currentMoney);
+    SendClientMessage(playerid, -1, msg);
+
     return 1;
 }
 
@@ -81,12 +100,12 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerSpawn(playerid)
 {
-	SetPlayerInterior(playerid,0);
-	TogglePlayerClock(playerid,0);
+	SetPlayerInterior(playerid,false);
+	TogglePlayerClock(playerid,false);
 	return 1;
 }
 
-public OnPlayerDeath(playerid, killerid, reason)
+public OnPlayerDeath(playerid, killerid, WEAPON:reason)
 {
    	return 1;
 }
@@ -96,6 +115,12 @@ public OnPlayerRequestClass(playerid, classid)
     // Set the player's spawn information (skin, weapons, location, etc.)
     // This example uses default info set with AddPlayerClass earlier in the script.
     SetSpawnInfo(playerid, NO_TEAM, 2, 1958.33, 1343.12, 15.36, 269.15, WEAPON_SAWEDOFF, 36, WEAPON_UZI, 150, WEAPON_BAT, 0);
+
+    // set player name
+    SetPlayerName(playerid, "syahrul_safarila");
+
+    // set player score
+    SetPlayerScore(playerid, 10);
 
     // Force the player to spawn instantly
     SpawnPlayer(playerid);
@@ -113,9 +138,9 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnGameModeInit()
 {
-	SetGameModeText("SySafarila Script");
-	ShowPlayerMarkers(1);
-	ShowNameTags(1);
+	SetGameModeText(GAME_MODE_TEXT);
+	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL);
+	ShowNameTags(true);
 	// AllowAdminTeleport(1);
 
 	// AddPlayerClass(265,1958.3783,1343.1572,15.3746,270.1425,0,0,0,0,-1,-1);
