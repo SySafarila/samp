@@ -246,10 +246,10 @@ public OnPlayerRequestClass(playerid, classid)
     SetSpawnInfo(playerid, NO_TEAM, 2, 1958.33, 1343.12, 15.36, 269.15, WEAPON_SAWEDOFF, 36, WEAPON_UZI, 150, WEAPON_BAT, 0);
 
     // set player name
-    SetPlayerName(playerid, "syahrul_safarila");
+    // SetPlayerName(playerid, "syahrul_safarila");
 
     // set player score
-    SetPlayerScore(playerid, 10);
+    // SetPlayerScore(playerid, 10);
 
     // Force the player to spawn instantly
     SpawnPlayer(playerid);
